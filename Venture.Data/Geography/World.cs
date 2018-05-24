@@ -24,7 +24,7 @@ namespace Venture.Data.Geography
 
 			GridUnits = new Dictionary<Tuple<double, double>, GridUnit>();
 
-		    for (var lat = -90; lat < 90; lat++)
+		    for (var lat = 90; lat > -90; lat--)
 		    {
 			    for (var lon = -180; lon < 180; lon++)
 			    {
@@ -51,7 +51,7 @@ namespace Venture.Data.Geography
 		    var numPlates = 8;
 
 			_plates = new Dictionary<byte, TectonicPlate>();
-		    var plateDistance = new Dictionary<byte, int>();
+		    var plateDistance = new Dictionary<byte, double>();
 
 		    var calcPlateUnits = new Dictionary<byte, IList<GridUnit>>();
 		    for (byte plateId = 0; plateId < numPlates; plateId++)
@@ -65,43 +65,49 @@ namespace Venture.Data.Geography
 			    calcPlateUnits[plateId].Add(plateCenterUnit);
 			}
 
-			while(calcPlateUnits.Values.Any(pu => pu.Count > 0))
-			{
-				var plateId = (byte)_random.Next(0, numPlates);
+		    while(calcPlateUnits.Values.Any(pu => pu.Count > 0))
+		    {
+			    var plateId = (byte)_random.Next(0, numPlates);
+			    //for (byte plateId = 0; plateId < numPlates; plateId++)
+			    {
+				    var plate = _plates[plateId];
 
-				var plate = _plates[plateId];
+				    var nextPlateUnits = new List<GridUnit>();
+				    foreach (var gu in calcPlateUnits[plateId])
+				    {
+					    if (gu.PlateId != null) continue;
 
-				var nextPlateUnits = new List<GridUnit>();
-				foreach (var gu in calcPlateUnits[plateId])
-				{
-					if (gu.PlateId != null) continue;
+					    if (gu.Distance(plate.Center) <= plateDistance[plateId])
+					    {
+						    gu.PlateId = plateId;
+						    foreach (var neighbor in gu.Neighbors)
+						    {
+							    if (neighbor.PlateId == null)
+							    {
+								    //if(!nextPlateUnits.Contains(neighbor))
+									    nextPlateUnits.Add(neighbor);
+							    }
+							    else if (neighbor.PlateId != gu.PlateId)
+							    {
+								    gu.IsPlateBorder = neighbor.IsPlateBorder = true;
+							    }
+						    }
+					    }
+					    else
+					    {
+						    nextPlateUnits.Add(gu);
+					    }
+				    }
 
-					if (gu.Distance(plate.Center) < plateDistance[plateId])
-					{
-						gu.PlateId = plateId;
-						foreach (var neighbor in gu.Neighbors) //.Where(n => n.PlateId == null))
-						{
-							if (neighbor.PlateId == null)
-							{
-								nextPlateUnits.Add(neighbor);
-							}
-							else if (neighbor.PlateId != gu.PlateId)
-							{
-								gu.IsPlateBorder = neighbor.IsPlateBorder = true;
-							}
-						}
-					}
-					else
-					{
-						nextPlateUnits.Add(gu);
+				    calcPlateUnits[plateId] = nextPlateUnits;
+				    if (nextPlateUnits.Count > 0)
+				    {
+					    plateDistance[plateId] = nextPlateUnits.Average(pu => pu.Distance(plate.Center));
 					}
 				}
+		    }
 
-				calcPlateUnits[plateId] = nextPlateUnits;
-				plateDistance[plateId]++;
-			}
-
-			//Console.WriteLine($"Geo units: {GridUnits.Count}");
+		    //Console.WriteLine($"Geo units: {GridUnits.Count}");
 		    //Console.WriteLine($"Plate geo units: {GridUnits.Values.Count(gu => gu.PlateId != null)}");
 	    }
 	}

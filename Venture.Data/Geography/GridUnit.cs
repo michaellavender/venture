@@ -10,13 +10,16 @@ namespace Venture.Data.Geography
 		private static double radiansCvt = (Math.PI / 180.0);
 	    private Tuple<double, double> _key;
 	    private List<Tuple<double, double>> _neighborKeys;
+	    private IDictionary<Tuple<double, double>, double> _distances;
 
-	    public GridUnit(double latitude, double longitude)
+		public GridUnit(double latitude, double longitude)
 	    {
 		    Latitude = latitude;
 		    Longitude = longitude;
 			Key = new Tuple<double, double>(Latitude, Longitude);
-	    }
+
+		    _distances = new Dictionary<Tuple<double, double>, double>();
+		}
 
 		public byte? PlateId { get; set; }
 		public bool IsPlateBorder { get; set; }
@@ -37,14 +40,34 @@ namespace Venture.Data.Geography
 				    for (var latIdx = -1; latIdx <= 1; latIdx++)
 				    {
 					    var lat = Latitude + latIdx;
-					    if (lat >= 90 || lat < -90) continue;
+					    var longitude = Longitude;
+
+					    var wrapPole = false;
+					    if (lat < -89)
+					    {
+						    lat = -89;
+						    wrapPole = true;
+					    }
+						else if (lat > 90)
+					    {
+						    lat = 90;
+						    wrapPole = true;
+						}
+
+					    if (wrapPole)
+					    {
+						    if (longitude < 0)
+							    longitude = 180 + longitude;
+						    else
+							    longitude = -180 + longitude;
+					    }
 
 					    for (var lonIdx = -1; lonIdx <= 1; lonIdx++)
 					    {
 							// Ignore this point (it's not a neighbor of itself)
 						    if (latIdx == 0 && lonIdx == 0) continue;
 
-						    var lon = Longitude + lonIdx;
+						    var lon = longitude + lonIdx;
 						    if (lon > 179)
 							    lon = -180;
 							else if (lon < -180)
@@ -93,8 +116,26 @@ namespace Venture.Data.Geography
 
 	    public double Distance(double latitude, double longitude)
 	    {
-		    return
-			    Math.Sqrt(Math.Pow(Longitude - longitude, 2) + Math.Pow(Latitude - latitude, 2));
+		    var key = new Tuple<double, double>(latitude, longitude);
+
+		    if (_distances.TryGetValue(key, out var dist))
+			    return dist;
+
+		    //dist = Math.Sqrt(Math.Pow(Longitude - longitude, 2) + Math.Pow(Latitude - latitude, 2));
+
+		    var rlat1 = Math.PI * Latitude / 180;
+		    var rlat2 = Math.PI * latitude / 180;
+		    var theta = Longitude - longitude;
+		    var rtheta = Math.PI * theta / 180;
+	        dist =
+		        Math.Sin(rlat1) * Math.Sin(rlat2) + Math.Cos(rlat1) *
+		        Math.Cos(rlat2) * Math.Cos(rtheta);
+	        dist = Math.Acos(dist);
+	        dist = dist * 180 / Math.PI;
+
+		    _distances[key] = dist;
+		    return dist;
+	        //return  dist * 60 * 1.1515;
 	    }
-    }
+	}
 }

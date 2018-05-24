@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Venture.Data.Geography
 {
@@ -11,15 +9,14 @@ namespace Venture.Data.Geography
 	    public Tuple<double, double> Center { get; }
 		public byte Id { get; }
 
-	    public TectonicPlate(byte id)
+	    public TectonicPlate(byte id, double? latitude = null, double? longitude = null)
 	    {
 		    Id = id;
 
-		    var lat = _random.Next(-90, 90);
-		    if (lat == 0) lat++;
-		    var lon = _random.Next(-180, 180);
-		    Center = new Tuple<double, double>(lat, lon);
+			latitude = latitude  ?? _random.Next(-89, 91);
+			longitude = longitude ?? _random.Next(-180, 180);
 
+		    Center = new Tuple<double, double>(latitude.Value, longitude.Value);
 		}
 	}
 }

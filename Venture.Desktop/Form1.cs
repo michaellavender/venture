@@ -90,10 +90,13 @@ namespace Venture.Desktop
 			var yOffset = gu.Latitude * vdegSize;
 			var xOffset = gu.Longitude * hdegSize;
 
+			var xMultiplier = gu.TopPctArc;
+			xMultiplier = 1;
+
 			var rect = new Rectangle(
-				(int)(centerX + (xOffset * gu.TopPctArc)),
+				(int)(centerX + (xOffset * xMultiplier)),
 				(int)(centerY - yOffset),
-				(int)(hdegSize * gu.TopPctArc),
+				(int)(hdegSize * xMultiplier),
 				(vdegSize));
 
 			e.Graphics.FillRectangle(_brushes[_plateColors[gu.PlateId ?? 0]], rect);

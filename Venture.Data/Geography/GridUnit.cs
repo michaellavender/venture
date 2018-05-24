@@ -85,5 +85,16 @@ namespace Venture.Data.Geography
 	    {
 		    return NeighborKeys.Contains(gu.Key);
 	    }
+
+	    public double Distance(Tuple<double, double> position)
+	    {
+		    return Distance(position.Item1, position.Item2);
+	    }
+
+	    public double Distance(double latitude, double longitude)
+	    {
+		    return
+			    Math.Sqrt(Math.Pow(Longitude - longitude, 2) + Math.Pow(Latitude - latitude, 2));
+	    }
     }
 }

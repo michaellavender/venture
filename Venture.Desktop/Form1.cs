@@ -61,7 +61,6 @@ namespace Venture.Desktop
 
 			var hdegSize = (e.ClipRectangle.Width / 360);
 			var vdegSize = (e.ClipRectangle.Height / 180);
-
 			//var gu = _world.GridUnits.FirstOrDefault(u =>
 			//	u.Location.Longitude == 0 && u.Location.Latitude == 1);
 			//DrawGU(e, gu);
@@ -80,22 +79,21 @@ namespace Venture.Desktop
 
 		private void DrawGU(PaintEventArgs e, GridUnit gu)
 		{
-			if (!gu.IsPlateBorder) return;
+			if (gu.PlateId == null) return;
+			//if (!gu.IsPlateBorder) return;
 			var centerX = e.ClipRectangle.Width / 2;
 			var centerY = e.ClipRectangle.Height / 2;
 
 			var hdegSize = (e.ClipRectangle.Width / 360);
 			var vdegSize = (e.ClipRectangle.Height / 180);
 
-			//var hdegSize = 1;
-			//var vdegSize = 1;
 			var yOffset = gu.Latitude * vdegSize;
 			var xOffset = gu.Longitude * hdegSize;
 
 			var rect = new Rectangle(
-				(int)(centerX + xOffset),// * gu.TopPctArc)),
+				(int)(centerX + (xOffset * gu.TopPctArc)),
 				(int)(centerY - yOffset),
-				(hdegSize),// * gu.TopPctArc),
+				(int)(hdegSize * gu.TopPctArc),
 				(vdegSize));
 
 			e.Graphics.FillRectangle(_brushes[_plateColors[gu.PlateId ?? 0]], rect);

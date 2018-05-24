@@ -45,9 +45,10 @@
 			// 
 			// pictureBox1
 			// 
-			this.pictureBox1.Location = new System.Drawing.Point(20, 104);
+			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.pictureBox1.Location = new System.Drawing.Point(0, 125);
 			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(1472, 826);
+			this.pictureBox1.Size = new System.Drawing.Size(1550, 826);
 			this.pictureBox1.TabIndex = 1;
 			this.pictureBox1.TabStop = false;
 			this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);

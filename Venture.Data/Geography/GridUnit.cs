@@ -1,36 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.Spatial;
+using System.Linq;
 
 namespace Venture.Data.Geography
 {
     public class GridUnit
     {
 	    public const double ArcDistance = 69.172;
-	    public const int DegreesOfArc = 4;
 		private static double radiansCvt = (Math.PI / 180.0);
+	    private Tuple<double, double> _key;
+	    private List<Tuple<double, double>> _neighborKeys;
 
+	    public GridUnit(double latitude, double longitude)
+	    {
+		    Latitude = latitude;
+		    Longitude = longitude;
+			Key = new Tuple<double, double>(Latitude, Longitude);
+	    }
+
+		public byte? PlateId { get; set; }
+		public bool IsPlateBorder { get; set; }
 		public bool IsLand { get; set; }
 
-	    public GeographyPoint Location { get; set; }
+		public double Longitude { get; }
+	    public double Latitude { get; }
+	    public double Elevation { get; set; }
+		public Tuple<double, double> Key { get; }
 
-	    public double TopPctArc => Location.Latitude > 0
-		    ? Math.Cos(Location.Latitude * radiansCvt)
-		    : Math.Cos((Math.Abs(Location.Latitude) - DegreesOfArc) * radiansCvt);
+	    public IReadOnlyList<Tuple<double, double>> NeighborKeys
+	    {
+		    get
+		    {
+			    if (_neighborKeys == null)
+			    {
+				    _neighborKeys = new List<Tuple<double, double>>();
+				    for (var latIdx = -1; latIdx <= 1; latIdx++)
+				    {
+					    var lat = Latitude + latIdx;
+					    if (lat >= 90 || lat < -90) continue;
 
-	    public double TopWidth => TopPctArc * ArcDistance * DegreesOfArc;
+					    for (var lonIdx = -1; lonIdx <= 1; lonIdx++)
+					    {
+							// Ignore this point (it's not a neighbor of itself)
+						    if (latIdx == 0 && lonIdx == 0) continue;
 
-		public double BottomPctArc => Location.Latitude > 0
-			? Math.Cos((Location.Latitude - DegreesOfArc)* radiansCvt)
-			: Math.Cos(Math.Abs(Location.Latitude * radiansCvt));
+						    var lon = Longitude + lonIdx;
+						    if (lon > 179)
+							    lon = -180;
+							else if (lon < -180)
+							    lon = 179;
 
-	    public double BottomWidth => BottomPctArc * ArcDistance * DegreesOfArc;
+							_neighborKeys.Add(new Tuple<double, double>(lat, lon));
+					    }
+				    }
+			    }
+
+			    return _neighborKeys;
+		    }
+	    }
+
+
+		public void SetNeighbors(IDictionary<Tuple<double, double>, GridUnit> worldUnits)
+		{
+			Neighbors = NeighborKeys.Select(key => worldUnits[key])
+				//.Where(n => n.PlateId == null)
+				.ToList();
+		}
+
+		public IReadOnlyList<GridUnit> Neighbors { get; set; }
+
+	    public double TopPctArc => Latitude > 0
+		    ? Math.Cos(Latitude * radiansCvt)
+		    : Math.Cos((Math.Abs(Latitude) - 1) * radiansCvt);
+
+	    public double TopWidth => TopPctArc * ArcDistance;
+
+		public double BottomPctArc => Latitude > 0
+			? Math.Cos((Latitude - 1)* radiansCvt)
+			: Math.Cos(Math.Abs(Latitude * radiansCvt));
+
+	    public double BottomWidth => BottomPctArc * ArcDistance;
 
 	    public bool IsNeighbor(GridUnit gu)
 	    {
-		    return Math.Abs(Location.Latitude - gu.Location.Latitude) <= DegreesOfArc
-				   && Math.Abs(Location.Longitude - gu.Location.Longitude) <= DegreesOfArc;
+		    return NeighborKeys.Contains(gu.Key);
 	    }
     }
 }

@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using Newtonsoft.Json;
 
-namespace Venture.Data.Monsters
+namespace Venture.Data.SRD.Monsters
 {
 	public interface IMonsterList : IEnumerable<Monster>
 	{
@@ -20,7 +20,7 @@ namespace Venture.Data.Monsters
 		    //var serializerSettings = new JsonSerializerSettings();
 		    //serializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-			using (var stream = Assembly.GetAssembly(GetType()).GetManifestResourceStream(@"Venture.Data.Monsters.monsters.json"))
+			using (var stream = Assembly.GetAssembly(GetType()).GetManifestResourceStream(@"Venture.Data.SRD.json.monsters.json"))
 		    {
 				using (var reader = new StreamReader(stream))
 				{

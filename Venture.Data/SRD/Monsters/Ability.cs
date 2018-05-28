@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Venture.Data.Monsters
+namespace Venture.Data.SRD.Monsters
 {
 	public class Ability
     {

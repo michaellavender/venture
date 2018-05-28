@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Venture.Data.Monsters;
+using Venture.Data.SRD.Monsters;
 
 namespace Venture.Web.Controllers
 {

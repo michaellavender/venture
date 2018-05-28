@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Monsters\monsters.json" />
+    <None Remove="SRD\Monsters\monsters.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Monsters\monsters.json" />
+    <EmbeddedResource Include="SRD\json\monsters.json" />
   </ItemGroup>
 
   <ItemGroup>

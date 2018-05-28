@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Venture.Data.Spells
+namespace Venture.Data.SRD.Spells
 {
     public class Spell
     {

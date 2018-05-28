@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Venture.Data.Monsters
+namespace Venture.Data.SRD.Monsters
 {
     public class Monster
     {

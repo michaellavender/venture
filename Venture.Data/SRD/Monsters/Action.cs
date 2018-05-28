@@ -1,4 +1,4 @@
-﻿namespace Venture.Data.Monsters
+﻿namespace Venture.Data.SRD.Monsters
 {
     public class Action
 	{

@@ -10,6 +10,7 @@ import { MatToolbarModule, MatSidenavModule, MatButtonModule, MatIconModule, Mat
 import { AppComponent } from './app.component';
 import { SecurityModule } from './security/security.module';
 import { SystemModule } from './system/system.module';
+import { MonstersModule } from './monsters/monsters.module';
 
 import { APP_BASE_HREF } from '@angular/common';
 export class MyHammerConfig extends HammerGestureConfig {
@@ -21,7 +22,8 @@ export class MyHammerConfig extends HammerGestureConfig {
 const routes: Routes = [
     //{ path: '', pathMatch: 'full', redirectTo: 'first' },
     { path: 'security', loadChildren: './security/security.module#SecurityModule' },
-    { path: 'system', loadChildren: './system/system.module#SystemModule' }
+    { path: 'system', loadChildren: './system/system.module#SystemModule' },
+    { path: 'monsters', loadChildren: './monsters/monsters.module#MonstersModule' },
 ];
 
 @NgModule({
@@ -40,7 +42,8 @@ const routes: Routes = [
         MatIconModule,
         MatCheckboxModule,
         SecurityModule,
-        SystemModule
+        SystemModule,
+        MonstersModule
     ],
     providers: [
         { provide: APP_BASE_HREF, useValue: '/' },

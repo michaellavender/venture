@@ -5,9 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Monsters\monsters.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Monsters\monsters.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="Microsoft.Spatial" Version="7.4.4" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Files\" />
   </ItemGroup>
 
 </Project>

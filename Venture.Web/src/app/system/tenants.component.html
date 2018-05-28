@@ -1,0 +1,4 @@
+<ul>
+    <li *ngFor="let value of tenants">{{value.name}} ({{value.id}})</li>
+</ul>
+<button mat-raised-button color="primary" class="btn-block font-weight-bold" (click)="addItem()">Add Tenant</button>

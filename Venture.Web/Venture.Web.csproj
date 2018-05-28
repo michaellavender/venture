@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <AssemblyName>Venture.Web</AssemblyName>
+    <RootNamespace>Venture.Web</RootNamespace>
+    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\assets\**" />
+    <Content Remove="wwwroot\assets\**" />
+    <EmbeddedResource Remove="wwwroot\assets\**" />
+    <None Remove="wwwroot\assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\favicon.ico" />
+    <Content Remove="wwwroot\index.html" />
+    <Content Remove="wwwroot\inline.bundle.js" />
+    <Content Remove="wwwroot\inline.bundle.js.map" />
+    <Content Remove="wwwroot\main.bundle.js" />
+    <Content Remove="wwwroot\main.bundle.js.map" />
+    <Content Remove="wwwroot\polyfills.bundle.js" />
+    <Content Remove="wwwroot\polyfills.bundle.js.map" />
+    <Content Remove="wwwroot\styles.bundle.js" />
+    <Content Remove="wwwroot\styles.bundle.js.map" />
+    <Content Remove="wwwroot\vendor.bundle.js" />
+    <Content Remove="wwwroot\vendor.bundle.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="src\app\security\security.module.ts" />
+    <None Remove="src\app\security\sign-in.component.ts" />
+    <None Remove="src\app\system\system.module.ts" />
+    <None Remove="src\app\system\tenants.component.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Redis.Core" Version="1.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="src\app\security\security.module.ts" />
+    <TypeScriptCompile Include="src\app\security\sign-in.component.ts" />
+    <TypeScriptCompile Include="src\app\system\system.module.ts" />
+    <TypeScriptCompile Include="src\app\system\tenants.component.ts" />
+  </ItemGroup>
+
+</Project>

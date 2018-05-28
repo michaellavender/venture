@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+    <span>
+        <button *ngIf="windowSize === 'small'" mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
+    </span>
+    <h3 flex class="no-margin">&nbsp;Venture</h3>
+    <span><a [routerLink]="['/security/sign-in']">Sign In</a></span>
+</mat-toolbar>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav [opened]="windowSize !== 'small'" [mode]="windowSize !== 'small' ? 'side' : 'over'">
+        <h3>Group Header #1</h3>
+        <ul>
+            <li><a [routerLink]="['/tenants']">Tenants</a></li>
+            <li><a [routerLink]="['/users']">Users</a></li>
+        </ul>
+        <h3>Group Header #2</h3>
+        <ul>
+            <li><a [routerLink]="['/']">Blah</a></li>
+            <li><a [routerLink]="['/']">Blah</a></li>
+            <li><a [routerLink]="['/']">Blah</a></li>
+        </ul>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="venture-app-content">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

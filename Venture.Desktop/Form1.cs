@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Venture.Data.Geography;
 
@@ -80,7 +75,8 @@ namespace Venture.Desktop
 		private void DrawGU(PaintEventArgs e, GridUnit gu)
 		{
 			if (gu.PlateId == null) return;
-			//if (!gu.IsPlateBorder) return;
+
+			//if (!gu.IsOnFault) return;
 			var centerX = e.ClipRectangle.Width / 2;
 			var centerY = e.ClipRectangle.Height / 2;
 
@@ -99,7 +95,21 @@ namespace Venture.Desktop
 				(int)(hdegSize * xMultiplier),
 				(vdegSize));
 
-			e.Graphics.FillRectangle(_brushes[_plateColors[gu.PlateId ?? 0]], rect);
+
+			//e.Graphics.FillRectangle(_brushes[_plateColors[gu.PlateId ?? 0]], rect);
+
+			//var col = Color.FromArgb((int)(gu.Elevation ?? 0), (int)(gu.Elevation ?? 0), (int)(gu.Elevation ?? 0));
+			//var elevationBrush = new SolidBrush(col);
+
+			var brush = gu.CrustType == CrustType.Unknown
+			? _brushes[Color.White]
+			: gu.IsOnFault
+				? _brushes[Color.Black]
+				: gu.CrustType == CrustType.Oceanic
+					? _brushes[Color.Blue]
+					: _brushes[Color.Green];
+
+			e.Graphics.FillRectangle(brush, rect);
 
 			//e.Graphics.DrawRectangle(_blackPen, rect);
 		}

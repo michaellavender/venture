@@ -1,16 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Venture.Data.Geography
 {
+	public enum CrustType
+	{
+		Unknown,
+		Oceanic,
+		Continental
+	}
+
     public class GridUnit
     {
 	    public const double ArcDistance = 69.172;
 		private static double radiansCvt = (Math.PI / 180.0);
-	    private Tuple<double, double> _key;
 	    private List<Tuple<double, double>> _neighborKeys;
-	    private IDictionary<Tuple<double, double>, double> _distances;
+	    private readonly IDictionary<Tuple<double, double>, double> _distances;
 
 		public GridUnit(double latitude, double longitude)
 	    {
@@ -22,12 +29,12 @@ namespace Venture.Data.Geography
 		}
 
 		public byte? PlateId { get; set; }
-		public bool IsPlateBorder { get; set; }
-		public bool IsLand { get; set; }
+		public bool IsOnFault { get; set; }
+		public CrustType CrustType { get; set; }
 
 		public double Longitude { get; }
 	    public double Latitude { get; }
-	    public double Elevation { get; set; }
+	    public double? Elevation { get; set; }
 		public Tuple<double, double> Key { get; }
 
 	    public IReadOnlyList<Tuple<double, double>> NeighborKeys

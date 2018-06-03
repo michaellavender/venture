@@ -5,11 +5,11 @@ import { HttpModule } from '@angular/http';
 import { Routes, RouterModule } from '@angular/router';
 import { MatButtonModule, MatCheckboxModule, MatInputModule, MatListModule, MatRadioModule, MatSelectModule, MatSlideToggleModule } from '@angular/material';
 
-import { MonsterListComponent } from './monster-list.component';
+import { EncounterBuildComponent } from './encounter-build.component';
 
 const routes: Routes = [
     //{ path: '', redirectTo: '../', pathMatch: 'full' },
-    { path: '', component: MonsterListComponent }
+    { path: '', component: EncounterBuildComponent }
 ];
 
 @NgModule({
@@ -22,10 +22,10 @@ const routes: Routes = [
         MatButtonModule, MatCheckboxModule, MatListModule, MatInputModule, MatRadioModule, MatSelectModule, MatSlideToggleModule
     ],
     declarations: [
-        MonsterListComponent
+        EncounterBuildComponent
     ],
     exports: [],
     providers: [
     ]
 })
-export class MonstersModule { }
+export class EncountersModule { }

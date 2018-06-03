@@ -1,0 +1,11 @@
+<mat-form-field>
+    <input matInput [(ngModel)]="vm.name" placeholder="Encounter Name" />
+</mat-form-field>
+<mat-list>
+    <mat-list-item *ngFor="let em of vm.monsters">
+        <mat-select [(ngModel)]="em.name">
+            <mat-option *ngFor="let monster of monsters" value="monster.name">{{monster.name}}</mat-option>
+        </mat-select>
+    </mat-list-item>
+</mat-list>
+<button mat-raised-button (click)="addMonster()">Add Monster</button>

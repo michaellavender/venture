@@ -9,6 +9,7 @@
     <mat-sidenav #sidenav [opened]="windowSize !== 'small'" [mode]="windowSize !== 'small' ? 'side' : 'over'">
         <h3>Group Header #1</h3>
         <ul>
+            <li><a [routerLink]="['/encounters']">Encounters</a></li>
             <li><a [routerLink]="['/monsters']">Monsters</a></li>
         </ul>
         <h3>Group Header #2</h3>

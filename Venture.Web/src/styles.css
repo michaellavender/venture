@@ -391,3 +391,19 @@ mat-sidenav-content {
     border-radius: 0;
     transition: none;
 }
+
+input + .mat-dialog-content {
+    margin-top: 15px;
+}
+
+.mat-card-list {
+    padding-bottom: 15px;
+}
+
+.mat-card-list .mat-card {
+    margin-top: 15px;
+}
+
+.mat-card.selected {
+    background-color: #f2f2f2;
+}

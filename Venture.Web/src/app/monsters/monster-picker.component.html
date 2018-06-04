@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<input matInput type="text" (keyup)="filterMonsters($event.target.value)" placeholder="Filter by name" />
+<mat-dialog-content class="mat-card-list">
+    <mat-card *ngFor="let value of monsters" (click)="select(value)" [class.selected]="value === this.selection">
+        <mat-card-title>{{value.name}}</mat-card-title>
+        <mat-card-subtitle>{{value.size}} {{value.type}} ({{value.subtype}}) {{value.alignment}}</mat-card-subtitle>
+        <mat-card-content>
+            <div><b>Armor Class</b> {{value.armorClass}}</div>
+            <div><b>Hit Points</b> {{value.hitPoints}} ({{value.hitDice}})</div>
+            <div><b>Speed</b> {{value.speed}}</div>
+            <mat-divider></mat-divider>
+            <table style="width: 100%;">
+                <tr>
+                    <td>STR</td>
+                    <td>DEX</td>
+                    <td>CON</td>
+                    <td>INT</td>
+                    <td>WIS</td>
+                    <td>CHA</td>
+                </tr>
+                <tr>
+                    <td>{{value.strength}} ({{getAbilityModifier(value.strength)}})</td>
+                    <td>{{value.dexterity}} ({{getAbilityModifier(value.dexterity)}})</td>
+                    <td>{{value.constitution}} ({{getAbilityModifier(value.constitution)}})</td>
+                    <td>{{value.intelligence}} ({{getAbilityModifier(value.intelligence)}})</td>
+                    <td>{{value.wisdom}} ({{getAbilityModifier(value.wisdom)}})</td>
+                    <td>{{value.charisma}} ({{getAbilityModifier(value.charisma)}})</td>
+                </tr>
+            </table>
+            <mat-divider></mat-divider>
+            <div>
+                <b>Saving Throws</b>
+                <span *ngIf="value.strengthSave != null"> Str {{value.strengthSave}}</span>
+                <span *ngIf="value.dexteritySave != null"> Dex {{value.dexteritySave}}</span>
+                <span *ngIf="value.constitutionSave != null"> Con {{value.constitutionSave}}</span>
+                <span *ngIf="value.intelligenceSave != null"> Int {{value.intelligenceSave}}</span>
+                <span *ngIf="value.wisdomSave != null"> Wis {{value.wisdomSave}}</span>
+                <span *ngIf="value.charismaSave != null"> Cha {{value.charismaSave}}</span>
+            </div>
+            <!--
+    <div><b>Skills</b> {{value.}}</div>
+    <div><b>Senses</b> {{value.}}</div>
+    <div><b>Languages</b> {{value.}}</div>
+    -->
+            <div><b>Challenge</b> {{value.challengeRating}}</div>
+        </mat-card-content>
+    </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [disabled]="this.selection === null" (click)="selectMonster()">OK</button>
+</mat-dialog-actions>

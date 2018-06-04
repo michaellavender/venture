@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Router, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { MatToolbarModule, MatSidenavModule, MatButtonModule, MatIconModule, MatCheckboxModule } from '@angular/material';
+import { MatToolbarModule, MatSidenavModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatDialogModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { SecurityModule } from './security/security.module';
@@ -14,6 +14,8 @@ import { MonstersModule } from './monsters/monsters.module';
 import { EncountersModule } from './encounters/encounters.module';
 
 import { APP_BASE_HREF } from '@angular/common';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
+
 export class MyHammerConfig extends HammerGestureConfig {
     overrides = <any>{
         'swipe': { velocity: 0.4, threshold: 20 } // override default settings
@@ -43,6 +45,7 @@ const routes: Routes = [
         MatButtonModule,
         MatIconModule,
         MatCheckboxModule,
+        MatDialogModule,
         SecurityModule,
         SystemModule,
         MonstersModule,
@@ -50,7 +53,8 @@ const routes: Routes = [
     ],
     providers: [
         { provide: APP_BASE_HREF, useValue: '/' },
-        { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig }
+        { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig },
+        { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }
     ],
     bootstrap: [AppComponent]
 })

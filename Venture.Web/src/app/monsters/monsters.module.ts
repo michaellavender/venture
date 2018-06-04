@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { Routes, RouterModule } from '@angular/router';
-import { MatButtonModule, MatCheckboxModule, MatInputModule, MatListModule, MatRadioModule, MatSelectModule, MatSlideToggleModule } from '@angular/material';
+import { MatCardModule, MatDividerModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatListModule, MatRadioModule, MatSelectModule, MatSlideToggleModule, MatDialogModule } from '@angular/material';
 
 import { MonsterListComponent } from './monster-list.component';
+import { MonsterPickerComponent } from './monster-picker.component';
 
 const routes: Routes = [
     //{ path: '', redirectTo: '../', pathMatch: 'full' },
@@ -19,13 +20,15 @@ const routes: Routes = [
         ReactiveFormsModule,
         HttpModule,
         RouterModule.forChild(routes),
-        MatButtonModule, MatCheckboxModule, MatListModule, MatInputModule, MatRadioModule, MatSelectModule, MatSlideToggleModule
+        MatCardModule, MatDividerModule, MatButtonModule, MatCheckboxModule, MatListModule, MatInputModule, MatRadioModule, MatSelectModule, MatSlideToggleModule, MatDialogModule
     ],
     declarations: [
-        MonsterListComponent
+        MonsterListComponent,
+        MonsterPickerComponent
     ],
-    exports: [],
+    exports: [MonsterPickerComponent],
     providers: [
-    ]
+    ],
+    entryComponents: [MonsterPickerComponent]
 })
 export class MonstersModule { }

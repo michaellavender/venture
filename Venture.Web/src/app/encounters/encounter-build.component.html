@@ -3,9 +3,16 @@
 </mat-form-field>
 <mat-list>
     <mat-list-item *ngFor="let em of vm.monsters">
-        <mat-select [(ngModel)]="em.name">
-            <mat-option *ngFor="let monster of monsters" value="monster.name">{{monster.name}}</mat-option>
-        </mat-select>
+        <button mat-icon-button (click)="deleteMonster(em)"><mat-icon>remove_circle</mat-icon></button>
+        {{em.monster.name}}
+        <!--
+    <mat-select [(ngModel)]="em.name" required placeholder="Select monster">
+        <mat-option *ngFor="let monster of monsters" [value]="monster.name">{{monster.name}}</mat-option>
+    </mat-select>
+    -->
+        <input matInput type="number" min="1" required [(ngModel)]="em.count" />
     </mat-list-item>
 </mat-list>
 <button mat-raised-button (click)="addMonster()">Add Monster</button>
+<br/>
+Total Challenge Rating: <label>{{getChallengeRating()}}</label>
